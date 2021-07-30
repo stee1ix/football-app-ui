@@ -7,7 +7,11 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../assets/colors/colors';
@@ -29,7 +33,8 @@ const HomeScreen = ({navigation}) => {
 
   const renderCardsItem = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('Details')}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Details', {item: item})}>
         <ImageBackground
           source={item.image}
           style={[
@@ -56,78 +61,93 @@ const HomeScreen = ({navigation}) => {
       />
       <View style={styles.container}>
         <SafeAreaView>
-          {/* Search Area */}
-          <View style={styles.searchWrapper}>
-            <View style={styles.chipWrapper}>
-              <Image source={require('../assets/images/spain.png')} />
-              <Text>Spain</Text>
-              <Feather name="x" color={colors.darkGrey} />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {/* Search Area */}
+            <View style={styles.searchWrapper}>
+              <View style={styles.chipWrapper}>
+                <Image source={require('../assets/images/spain.png')} />
+                <Text>Spain</Text>
+                <Feather name="x" color={colors.darkGrey} />
+              </View>
+              <View style={[styles.chipWrapper, {width: 150}]}>
+                <Image source={require('../assets/images/real-madrid.png')} />
+                <Text>Real Madrid</Text>
+                <Feather name="x" color={colors.darkGrey} />
+              </View>
+              <Feather name="search" color={colors.black} size={24} />
             </View>
-            <View style={[styles.chipWrapper, {width: 150}]}>
-              <Image source={require('../assets/images/real-madrid.png')} />
-              <Text>Real Madrid</Text>
-              <Feather name="x" color={colors.darkGrey} />
-            </View>
-            <Feather name="search" color={colors.black} size={24} />
-          </View>
 
-          {/* Stories Area */}
-          <View style={styles.storiesWrapper}>
-            <FlatList
-              data={storiesData}
-              renderItem={renderStoriesItem}
-              keyExtractor={item => item.title}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
-          </View>
-
-          {/* Player Cards Area*/}
-          <View style={styles.playerCardsWrapper}>
-            <Text style={styles.playerCardsWrapperTitle}>Players</Text>
-            <View style={styles.playerCardsListWrapper}>
+            {/* Stories Area */}
+            <View style={styles.storiesWrapper}>
               <FlatList
-                data={cardsData}
-                keyExtractor={item => item.number}
-                renderItem={renderCardsItem}
+                data={storiesData}
+                renderItem={renderStoriesItem}
+                keyExtractor={item => item.title}
                 horizontal
                 showsHorizontalScrollIndicator={false}
               />
             </View>
-          </View>
 
-          {/* Latest News Area */}
-          <View style={styles.newsWrapper}>
-            <Text style={styles.newsWrapperTitle}>Latest News</Text>
-            {/* News 1 */}
-            <View style={styles.newsItemWrapper}>
-              <Image
-                source={require('../assets/images/news1.png')}
-                style={styles.newsItemImage}
-              />
-              <View style={styles.newsTextWrapper}>
-                <Text style={styles.newsTextBody}>
-                  Neymar contines to perform for PSG as the qualify for the
-                  Champions League Semi Fi...
-                </Text>
-                <Text style={styles.newsTextDate}>12 January, 2020</Text>
+            {/* Player Cards Area*/}
+            <View style={styles.playerCardsWrapper}>
+              <Text style={styles.playerCardsWrapperTitle}>Players</Text>
+              <View style={styles.playerCardsListWrapper}>
+                <FlatList
+                  data={cardsData}
+                  keyExtractor={item => item.number}
+                  renderItem={renderCardsItem}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                />
               </View>
             </View>
-            {/* News 2 */}
-            <View style={styles.newsItemWrapper}>
-              <Image
-                source={require('../assets/images/news2.png')}
-                style={styles.newsItemImage}
-              />
-              <View style={styles.newsTextWrapper}>
-                <Text style={styles.newsTextBody}>
-                  Real Madrid beats Juve with Cristiano Ronaldo smashing goal of
-                  the...
-                </Text>
-                <Text style={styles.newsTextDate}>14 January, 2020</Text>
+
+            {/* Latest News Area */}
+            <View style={styles.newsWrapper}>
+              <Text style={styles.newsWrapperTitle}>Latest News</Text>
+              {/* News 1 */}
+              <View style={styles.newsItemWrapper}>
+                <Image
+                  source={require('../assets/images/news1.png')}
+                  style={styles.newsItemImage}
+                />
+                <View style={styles.newsTextWrapper}>
+                  <Text style={styles.newsTextBody}>
+                    Neymar contines to perform for PSG as the qualify for the
+                    Champions League Semi Fi...
+                  </Text>
+                  <Text style={styles.newsTextDate}>12 January, 2020</Text>
+                </View>
+              </View>
+              {/* News 2 */}
+              <View style={styles.newsItemWrapper}>
+                <Image
+                  source={require('../assets/images/news2.png')}
+                  style={styles.newsItemImage}
+                />
+                <View style={styles.newsTextWrapper}>
+                  <Text style={styles.newsTextBody}>
+                    Real Madrid beats Juve with Cristiano Ronaldo smashing goal
+                    of the...
+                  </Text>
+                  <Text style={styles.newsTextDate}>14 January, 2020</Text>
+                </View>
+              </View>
+              <View style={styles.newsItemWrapper}>
+                <Image
+                  source={require('../assets/images/news2.png')}
+                  style={styles.newsItemImage}
+                />
+                <View style={styles.newsTextWrapper}>
+                  <Text style={styles.newsTextBody}>
+                    Real Madrid beats Juve with Cristiano Ronaldo smashing goal
+                    of the...
+                  </Text>
+                  <Text style={styles.newsTextDate}>14 January, 2020</Text>
+                </View>
               </View>
             </View>
-          </View>
+          </ScrollView>
         </SafeAreaView>
       </View>
     </>
